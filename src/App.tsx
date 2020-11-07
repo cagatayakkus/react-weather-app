@@ -3,6 +3,7 @@ import classes from "./App.module.css";
 import axios from "./axios";
 import SearchBar from "./components/SearchBar/SearchBar";
 import WeatherCard from "./components/WeatherCard/WeatherCard";
+import Error from "./components/Error/Error";
 import { Weather } from "./interfaces/Weather";
 import { formatWeather } from "./utilities/Utilities";
 
@@ -13,15 +14,24 @@ function App() {
 
   const [weather, setWeather] = useState<Weather | null>(null);
 
-  /*
-  http://api.openweathermap.org/data/2.5/weather?q=Izmir&units=metric&appid=505281203bf31cec92ae2cd15f3fa222
-  */
+  const [error, setError] = useState<{ cod: string; message: string } | null>(
+    null
+  );
 
   const _searchHandler = () => {
-    axios.get(`/weather?q=${location}&appid=${API_KEY}`).then((res) => {
-      let weatherData: Weather = formatWeather(res.data);
-      setWeather(weatherData);
-    });
+    axios
+      .get(`/weather?q=${location}&appid=${API_KEY}`)
+      .then((res) => {
+        let weatherData: Weather = formatWeather(res.data);
+        setWeather(weatherData);
+      })
+      .catch((err) => {
+        if (err.response) {
+            setError(err.response.data);
+        } else {
+          setError({cod:"500", message: err.message.toLowerCase()});
+        }
+      });
   };
 
   const _inputHandler = (e) => {
@@ -32,13 +42,8 @@ function App() {
   return (
     <div className={classes.App}>
       <SearchBar change={_inputHandler} click={_searchHandler} />
-      {/* <input
-        type="text"
-        name="search"
-        onChange={(e) => setLocation(e.target.value)}
-      />
-      <button onClick={_searchHandler}>Search</button> */}
-      {weather != null ? <WeatherCard weather={weather} /> : ""}
+      {error !== null ? <Error error={error} /> : ""}
+      {weather !== null ? <WeatherCard weather={weather} /> : ""}
     </div>
   );
 }

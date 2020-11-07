@@ -36,7 +36,7 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather }) => {
             <div className={classes.DegreeArea}>
               <WindDirection deg={weather.wind.deg} />
             </div>
-            <div>{weather.wind.speed}</div>
+            <div>{weather.wind.speed} m/s</div>
           </div>
         </div>
       </div>
