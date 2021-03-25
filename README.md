@@ -1,4 +1,10 @@
-# Usage
+# Weather App
+This project aims to learn
+* how to generate an API key,
+* how to implement .env file,
+* how to use API endpoints, 
+* how to handle the data which comes from API
+## Usage
 ### Clone the project
 ### Install packages
 Execute the command `npm install` in your terminal.
