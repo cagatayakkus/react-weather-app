@@ -4,6 +4,8 @@ This project aims to learn
 * how to implement .env file,
 * how to use API endpoints, 
 * how to handle the data which comes from API
+## This is how the app looks:
+![Weather App](./public/capture.PNG)
 ## Usage
 ### Clone the project
 ### Install packages
